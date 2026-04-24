@@ -1,8 +1,5 @@
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-# ==========================================================
-# 1. HELPER FUNCTIONS
-# ==========================================================
 def calculate_frequencies(text, total_letters):
     frequencies_output = ''
     letter_counts = {}
@@ -19,9 +16,7 @@ def calculate_frequencies(text, total_letters):
         
     return frequencies_output
 
-# ==========================================================
-# 2. ENCODERS
-# ==========================================================
+
 def cesar_encoder(message, key):
     output = ''
     for character in message:
@@ -46,9 +41,7 @@ def dynamic_encoder(message, key_sequence):
             output += char
     return output
 
-# ==========================================================
-# 3. MATH ENGINE (INDEX OF COINCIDENCE)
-# ==========================================================
+
 def calculate_ioc(text):
     N = len(text)
     if N <= 1:
@@ -65,9 +58,7 @@ def guess_key_length(message, max_length=15):
     clean_message = "".join([c for c in message.lower() if c in alphabet])
     best_length = 1
     best_avg_ioc = 0.0
-    
-    print("--- Analyzing Index of Coincidence ---")
-    
+        
     for length_to_test in range(1, max_length + 1):
         total_ioc = 0
         for i in range(length_to_test):
@@ -83,11 +74,8 @@ def guess_key_length(message, max_length=15):
     print(f"Detected highest IoC ({best_avg_ioc:.4f}) at a key length of: {best_length}\n")
     return best_length
 
-# ==========================================================
-# 4. CRACKERS
-# ==========================================================
 def frequency_cracker(message):
-    # UPDATED FOR ENGLISH LETTER FREQUENCIES
+    # FOR ENGLISH LETTER FREQUENCIES
     english_frequencies = {
         'e': 12.70, 't': 9.06, 'a': 8.17, 'o': 7.51, 'i': 6.97, 'n': 6.75,
         's': 6.33, 'h': 6.09, 'r': 5.99, 'd': 4.25, 'l': 4.03, 'c': 2.78,
@@ -121,6 +109,7 @@ def frequency_cracker(message):
     
     return round(best_score, 2), best_key, best_message, message_freq, found_freq
 
+
 def dynamic_cracker(message):
     guessed_length = guess_key_length(message)
     clean_message = "".join([c for c in message.lower() if c in alphabet])
@@ -133,21 +122,16 @@ def dynamic_cracker(message):
         
     final_message = dynamic_encoder(message, discovered_keys)
     
-    print(f"Discovered Key Sequence: {discovered_keys}")
-    print(f"\n==========================================================")
-    print(f"FINAL DECODED MESSAGE")
-    print(f"==========================================================\n")
+    print(f"Key Sequence: {discovered_keys}")
+    print(f"Decoded Message:")
     print(final_message.upper())
-    print(f"\n==========================================================")
     
     return final_message
 
-# ==========================================================
-# 5. PLAYGROUND
-# ==========================================================
+
 if __name__ == '__main__':
-    print("\nRUNNING FULLY AUTOMATIC CRACKER...")
     
     encrypted_text = "KJWTKZUGZQJXOEAIQFRITVOSSSGGAQKGXFRZITKGGDWXZVGFZZTSSNGXIOLH SQFITOLUGZQKGSSTREOUQKTZZTIQFUOFUGXZIOLDGXZIITOLQEGVWGNAORNT QIITYGXFRQLONLIGGZTKUXFOFIOLRQRESGLTZQFRVOZIQWGZGYYXFZIOFULOR GFZTCTFAFGVVIQZWXZITOLEGDOFUYGKNGXNTQIITOLEGDOFUYGKNGXQSSZIT GZITKAORLVOZIZITHXDHTRXHAOEANGXWTZZTKKXFWTZZTKKXFGXZKXFDNU XFQSSZITGZITKAORLVOZIZITHXDHTRXHAOEANGXWTZZTKKXFWTZZTKKXFYQ LZTKZIQFDNWXSSTZQSSZITGZITKAORLVOZIZITHXDHTRXHAOEANGXWTZZTKK XFWTZZTKKXFGXZKXFDNUXFQSSZITGZITKAORLVOZIZITHXDHTRXHAOEANGX WTZZTKKXFWTZZTKKXFYQLZTKZIQFDNWXSSTZRQRRNVGKALQSGFURQNIT'RW TEGDOFUIGDTSQZTNTQIITOLEGDOFUIGDTSQZTQFRITOLWKOFUOFUDTQLXKHK OLTEQXLROFFTKOLOFZITAOZEITFQFROZOLHQEATROFOETOIQCTVQOZTRYGKQ SGFUZODTNTQIZITLSTOUIZGYDNIQFROLFGVQJXOEAHXSSZKOUUKOKTQLGFVO ZIDNEOUQKTZZTZITFLQNNGXKIQOKOLGFYOKTNGXDXLZIQCTSGLZNGXKVOZL NTQIQSSZITGZITKAORLVOZIZITHXDHTRXHAOEANGXWTZZTKKXFWTZZTKKXFG XZKXFDNUXFQSSZITGZITKAORLVOZIZITHXDHTRXHAOEANGXWTZZTKKXFWTZ ZTKKXFYQLZTKZIQFDNWXSSTZQSSZITGZITKAORLVOZIZITHXDHTRXHAOEANG XWTZZTKKXFWTZZTKKXFGXZKXFDNUXFQSSZITGZITKAORLVOZIZITHXDHTRX HAOEANGXWTZZTKKXFWTZZTKKXFYQLZTKZIQFDNWXSSTZ"
     
     cracked_text = dynamic_cracker(encrypted_text)
+    
